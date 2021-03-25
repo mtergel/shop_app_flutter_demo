@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/size_config.dart';
 
