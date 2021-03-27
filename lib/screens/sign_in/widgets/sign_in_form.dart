@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
+import 'package:shop_app/screens/login_success/login_success_screen.dart';
 import 'package:shop_app/size_config.dart';
 import 'package:shop_app/widgets/custom_suffix_icon.dart';
 import 'package:shop_app/widgets/default_button.dart';
@@ -20,6 +21,22 @@ class _SigninformState extends State<Signinform> {
   String password;
   bool remember = false;
   final List<String> errors = [];
+
+  void addError({String error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +62,7 @@ class _SigninformState extends State<Signinform> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  Navigator.popAndPushNamed(
-                      context, ForgotPasswordScreen.routeName);
+                  Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
                 },
                 child: const Text('Forgot Password',
                     style: TextStyle(decoration: TextDecoration.underline)),
@@ -60,6 +76,9 @@ class _SigninformState extends State<Signinform> {
             press: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
+                // KeyboardUtil.hideKeyboard(context);
+                // handleSubmit
+                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
               }
             },
           )
@@ -70,40 +89,34 @@ class _SigninformState extends State<Signinform> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kPassNullError)) {
-          setState(() {
-            errors.remove(kPassNullError);
-          });
-        } else if (value.length >= 8 && errors.contains(kShortPassError)) {
-          setState(() {
-            errors.remove(kShortPassError);
-          });
+        if (value.isNotEmpty) {
+          removeError(error: kPassNullError);
+        } else if (value.length >= 8) {
+          removeError(error: kShortPassError);
         }
         return null;
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kPassNullError)) {
-          setState(() {
-            errors.add(kPassNullError);
-          });
-        } else if (value.length < 8 && !errors.contains(kShortPassError)) {
-          setState(() {
-            errors.add(kShortPassError);
-          });
+        if (value.isEmpty) {
+          addError(error: kPassNullError);
+          return "";
+        } else if (value.length < 8) {
+          addError(error: kShortPassError);
+          return "";
         }
         return null;
       },
-      obscureText: true,
       decoration: const InputDecoration(
-          labelText: 'Password',
-          labelStyle: TextStyle(color: kPrimaryColor),
-          hintText: 'Enter your password',
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: CustomSuffixIcon(
-            svgIcon: 'assets/icons/Lock.svg',
-          )),
+        labelText: "Password",
+        hintText: "Enter your password",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Lock.svg'),
+      ),
     );
   }
 
@@ -112,39 +125,31 @@ class _SigninformState extends State<Signinform> {
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.remove(kInvalidEmailError);
-          });
+        if (value.isNotEmpty) {
+          removeError(error: kEmailNullError);
+        } else if (emailValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidEmailError);
         }
         return null;
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
-        } else if (!emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.add(kInvalidEmailError);
-          });
+        if (value.isEmpty) {
+          addError(error: kEmailNullError);
+          return "";
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
+          addError(error: kInvalidEmailError);
+          return "";
         }
         return null;
       },
       decoration: const InputDecoration(
-          labelText: 'Email',
-          labelStyle: TextStyle(color: kPrimaryColor),
-          hintText: 'Enter your email',
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: CustomSuffixIcon(
-            svgIcon: 'assets/icons/Mail.svg',
-          )),
+        labelText: "Email",
+        hintText: "Enter your email",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Mail.svg'),
+      ),
     );
   }
 }
