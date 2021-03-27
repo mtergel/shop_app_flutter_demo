@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:shop_app/constants.dart';
+import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop_app/size_config.dart';
 import 'package:shop_app/widgets/custom_suffix_icon.dart';
 import 'package:shop_app/widgets/default_button.dart';
@@ -42,8 +43,14 @@ class _SigninformState extends State<Signinform> {
                   }),
               const Text('Remember Me'),
               const Spacer(),
-              const Text('Forgot Password',
-                  style: TextStyle(decoration: TextDecoration.underline))
+              GestureDetector(
+                onTap: () {
+                  Navigator.popAndPushNamed(
+                      context, ForgotPasswordScreen.routeName);
+                },
+                child: const Text('Forgot Password',
+                    style: TextStyle(decoration: TextDecoration.underline)),
+              )
             ],
           ),
           FormError(errors: errors),

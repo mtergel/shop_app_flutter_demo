@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:shop_app/constants.dart';
 import 'package:shop_app/screens/sign_in/widgets/sign_in_form.dart';
 import 'package:shop_app/size_config.dart';
+import 'package:shop_app/widgets/no_account_text.dart';
 import 'package:shop_app/widgets/social_button.dart';
 
 class SignInBody extends StatelessWidget {
@@ -52,22 +52,7 @@ class SignInBody extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: getProportionateScreenHeight(20)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style:
-                          TextStyle(fontSize: getProportionateScreenWidth(16)),
-                    ),
-                    Text(
-                      'Sign up',
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(16),
-                          color: kPrimaryColor),
-                    )
-                  ],
-                )
+                const NoAccountText()
               ],
             ),
           ),
