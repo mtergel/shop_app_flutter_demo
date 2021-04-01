@@ -15,11 +15,25 @@ const kTextColor = Color(0xFF757575);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
+// Styles
 final headingStyle = TextStyle(
     fontSize: getProportionateScreenWidth(28),
     fontWeight: FontWeight.bold,
     color: Colors.black,
     height: 1.5);
+
+final otpInputDecoration = InputDecoration(
+    contentPadding:
+        EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
+    enabledBorder: outlineInputBorder(),
+    focusedBorder: outlineInputBorder(),
+    border: outlineInputBorder());
+
+OutlineInputBorder outlineInputBorder() {
+  return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(color: kTextColor));
+}
 
 // Form Error
 final RegExp emailValidatorRegExp =
