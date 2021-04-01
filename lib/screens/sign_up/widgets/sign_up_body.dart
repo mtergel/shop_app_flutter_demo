@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/constants.dart';
+import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop_app/size_config.dart';
 import 'package:shop_app/widgets/custom_suffix_icon.dart';
 import 'package:shop_app/widgets/default_button.dart';
@@ -109,6 +110,7 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
             press: () {
               if (_formKey.currentState.validate()) {
+                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
                 // go to complete profile
               }
             },
