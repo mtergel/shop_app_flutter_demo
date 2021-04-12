@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/screens/home_screen/widgets/categories.dart';
 import 'package:shop_app/screens/home_screen/widgets/discount_banner.dart';
 import 'package:shop_app/screens/home_screen/widgets/home_header.dart';
+import 'package:shop_app/screens/home_screen/widgets/special_offer.dart';
 import 'package:shop_app/size_config.dart';
 
 class HomeScreenBody extends StatelessWidget {
@@ -15,19 +16,10 @@ class HomeScreenBody extends StatelessWidget {
             const HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(30)),
             const DiscountBanner(),
+            SizedBox(height: getProportionateScreenWidth(30)),
             Categories(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Special for you',
-                  style: TextStyle(
-                      fontSize: getProportionateScreenWidth(18),
-                      color: Colors.black),
-                ),
-                const Text('See more')
-              ],
-            )
+            SizedBox(height: getProportionateScreenWidth(30)),
+            const SpecialOffers()
           ],
         ),
       ),
